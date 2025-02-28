@@ -1,2 +1,7 @@
 guidance
 llama-cpp-python
+torch
+spacy
+nltk
+datasets
+transformers
