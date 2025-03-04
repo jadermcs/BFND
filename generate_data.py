@@ -18,16 +18,20 @@ def get_response(lm, article: str) -> Dict[str, str]:
     lm += f"""
 You are a person that misunderstand important facts. Your task is to rewrite 
 small parts of a news article to alter the facts making the information 
-different from the original. Example:
+different from the original.
+First example:
 Original article: "The unemployment rate increased from previous year by 2%."
 Altered article: "The unemployment rate increased from previous year by 7%."
+Second example:
+Original article: "Brazil attacked Bosnia last Thursday."
+Altered article: "Porto Rico attacked Bosnia last Thursday."
 
 Here is the paragraph:
 {article}
 
 First, let's think through the necessary steps to solve this problem:
 <think>
-{gen('reasoning')}
+{gen('reasoning', stop='</think>')}
 </think>
 
 Based on my analysis, here's my paragraph:
