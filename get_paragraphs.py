@@ -8,7 +8,6 @@ from rapidfuzz import fuzz
 import spacy
 from hashlib import sha256
 
-
 import torch
 from transformers import BertTokenizer, BertForNextSentencePrediction
 
@@ -57,10 +56,10 @@ nlp = spacy.load("en_core_web_sm")
 model_path = "cardiffnlp/twitter-roberta-base-sentiment-latest"
 
 
-sentiment_task = pipeline("sentiment-analysis", model=model_path, tokenizer=model_path)
-sentiment_task("Covid cases are increasing fast!")
+# sentiment_task = pipeline("sentiment-analysis", model=model_path, tokenizer=model_path)
+# sentiment_task("Covid cases are increasing fast!")
 
-dataset = load_dataset("biglam/hmd_newspapers")["train"]
+dataset = load_dataset("biglam/hmd_newspapers")["train"].shuffle(42).take(10)
 
 
 dataset = dataset.filter(lambda x:
@@ -74,9 +73,6 @@ def process(example):
 
 
 dataset = dataset.map(process)
-
-
-dataset.filter(lambda x: "imigrant" in x["text"])[0]
 
 
 def get_hash(examples):
