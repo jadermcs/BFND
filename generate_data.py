@@ -46,7 +46,6 @@ if __name__ == "__main__":
 
     count = 0
     for article in data:
-        print(article)
         count += 1
         print(f"\nArticle: {article['highlights']}")
         result = model + get_response(article['highlights'])
