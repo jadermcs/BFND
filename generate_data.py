@@ -7,7 +7,7 @@ from typing import Dict
 model = models.LlamaCpp(
     "models/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf",
     n_gpu_layers=-1,
-    n_ctx=1024,
+    n_ctx=2048,
     flash_attn=True,
     echo=False,
 )
@@ -16,15 +16,15 @@ model = models.LlamaCpp(
 @guidance
 def get_response(lm, article: str) -> Dict[str, str]:
     lm += f"""
-You are a person that misunderstand important facts. Your task is to rewrite 
-small parts of a news article to alter the facts making the information 
+You are a person that misunderstand important facts. Your task is to edit
+small facts of a news article to alter the information, making it 
 different from the original.
 First example:
 Original article: "The unemployment rate increased from previous year by 2%."
 Altered article: "The unemployment rate increased from previous year by 7%."
 Second example:
 Original article: "Brazil attacked Bosnia last Thursday."
-Altered article: "Porto Rico attacked Bosnia last Thursday."
+Altered article: "Bosnia attacked Brazil last Thursday."
 
 Here is the paragraph:
 {article}
