@@ -4,7 +4,7 @@ from typing import Dict
 
 
 # Create a model instance
-model = guidance.models.LLamaCpp("models/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf")
+model = guidance.models.LlamaCpp("models/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf")
 
 # Define a structured prompt with guidance syntax
 prompt = guidance("""
