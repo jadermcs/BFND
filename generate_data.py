@@ -1,6 +1,6 @@
 import guidance
 from guidance import gen, models
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 import random
 from typing import Dict
 
@@ -43,7 +43,7 @@ Based on my analysis, here's my paragraph:
 
 if __name__ == "__main__":
 
-    data = load_dataset("Pravincoder/CNN_News")["train"]
+    data = load_dataset("Pravincoder/CNN_News")["train"].shuffle(seed=42)
 
     new_data = []
     count = 0
@@ -70,3 +70,7 @@ if __name__ == "__main__":
             })
         if count > 10:
             break
+    new_data = Dataset.from_list(new_data)
+    new_data = new_data.train_test_split(test_size=0.3, seed=42)
+    new_data["train"].to_json("fake_news.train.json")
+    new_data["test"].to_json("fake_news.test.json")
