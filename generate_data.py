@@ -4,20 +4,21 @@ from datasets import load_dataset
 from typing import Dict
 
 
-# Create a model instance
-model = models.LlamaCpp("models/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf",
-            n_gpu_layers=-1,
-            n_ctx=1024,
-            flash_attn=True,
-            echo=False)
+model = models.LlamaCpp(
+    "models/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf",
+    n_gpu_layers=-1,
+    n_ctx=1024,
+    flash_attn=True,
+    echo=False,
+)
 
-# Define a structured prompt with guidance syntax
 
 @guidance
 def get_response(lm, article: str) -> Dict[str, str]:
     lm += f"""
-You are a helpful assistant. Your task is to rewrite/paraphrase small parts of 
-a news article to alter meaningfully what is said. Example:
+You are a person that misunderstand important facts. Your task is to rewrite 
+small parts of a news article to alter the facts making the information 
+different from the original. Example:
 Original article: "The unemployment rate increased from previous year by 2%."
 Altered article: "The unemployment rate increased from previous year by 7%."
 
