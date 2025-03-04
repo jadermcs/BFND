@@ -1,6 +1,7 @@
 import guidance
 from guidance import gen, models
 from datasets import load_dataset
+import random
 from typing import Dict
 
 
@@ -44,15 +45,28 @@ if __name__ == "__main__":
 
     data = load_dataset("Pravincoder/CNN_News")["train"]
 
+    new_data = []
     count = 0
     for article in data:
+        if len(article['highlights']) > 1000:
+            continue
         count += 1
-        print(f"\nArticle: {article['highlights']}")
-        result = model + get_response(article['highlights'])
-        print("\nReasoning:")
-        print(result["reasoning"])
-        print("\nResponse:")
-        print(result["response"])
-        print("-" * 50)
-        if count > 3:
+        fake = False
+        if random.random() > 0.5:
+            fake = True
+            print(f"\nOriginal article: {article['highlights']}")
+            result = model + get_response(article['highlights'])
+            print("\nReasoning:")
+            print(result["reasoning"])
+            print("\nResponse:")
+            print(result["response"])
+            print("-" * 50)
+        else:
+            result = {"response": article['highlights']}
+        new_data.append({
+            "original_article": article["text"],
+            "highlights": result["response"],
+            "fake_news": fake,
+            })
+        if count > 10:
             break
